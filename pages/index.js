@@ -2,6 +2,7 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import { ThemeBtnSection } from "../components/buttons/ThemeBtnSection";
 import Orators from "../components/lists/Orators";
+import Recorder from "../components/audio/Recorder";
 
 export default function Home() {
   return (
@@ -21,7 +22,9 @@ export default function Home() {
         <Orators />
       </main>
 
-      <footer className={styles.footer}></footer>
+      <footer className={styles.footer}>
+        <Recorder />
+      </footer>
     </div>
   );
 }

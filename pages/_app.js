@@ -1,7 +1,14 @@
-import '../styles/globals.css'
+import { useEffect } from "react";
+import "../styles/globals.css";
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+function App({ Component, pageProps }) {
+  useEffect(() => {
+    const theme = localStorage.getItem("proclaim-theme");
+    if (theme) {
+      document.body.setAttribute("data-theme", theme);
+    }
+  }, []);
+  return <Component {...pageProps} />;
 }
 
-export default MyApp
+export default App;

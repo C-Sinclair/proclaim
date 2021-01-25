@@ -1,13 +1,14 @@
-import { useCallback, useEffect, useReducer } from "react";
+import { useEffect, useReducer } from "react";
 
 /**
  * @typedef {Object} RecorderState
  * @prop {'idle' | 'recording' | 'complete'} RecorderState.status
  * @prop {?Date} RecorderState.startTime
  * @prop {?number} RecorderState.duration -- in milliseconds
- * @prop {?string[]} RecorderState.chunks -- chunks of recorded audio
  * @prop {?Blob} RecorderState.blob -- completed file blob
  */
+
+let recorder;
 
 /**
  * @type {RecorderState}
@@ -20,10 +21,18 @@ const initialState = {
 export default function Recorder() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  useEffect(() => {}, [dispatch]);
-
-  const onRecClick = () =>
-    state.status === "recording" ? state.media.stop : state.media?.start;
+  const onRecClick = async () => {
+    if (state.status !== "recording") {
+      recorder = new AudioRecorder();
+      await recorder.prepare((chunks) => {
+        dispatch({ type: "stop", payload: new Blob(chunks) });
+      });
+      recorder?.start();
+      dispatch({ type: "start" });
+    } else {
+      recorder?.stop();
+    }
+  };
 
   const onPlayClick = () => {
     new Audio(URL.createObjectURL(state.blob)).play();
@@ -31,7 +40,7 @@ export default function Recorder() {
 
   return (
     <section>
-      <button onClick={onRecClick(state.status)}>
+      <button onClick={onRecClick}>
         {state.status === "recording" ? "Stop" : "Record"}
       </button>
       {state.status === "complete" ? (
@@ -63,27 +72,28 @@ function reducer(state, action) {
       blob: action.payload,
     };
   }
-  if (action.type === "freshchunk") {
-    return {
-      ...state,
-      chunks: [...(state.chunks ?? []), action.payload],
-    };
-  }
   return state;
 }
 
 class AudioRecorder {
   constructor() {
     this.media = null;
+    this.chunks = [];
   }
 
-  async prepare() {
+  async prepare(onstop) {
+    this.reset();
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     this.media = new MediaRecorder(stream);
+    this.media.addEventListener("dataavailable", (e) => {
+      this.chunks.push(e.data);
+    });
+    this.media.onstop = (e) => {
+      onstop(this.chunks);
+    };
   }
 
   on(event, callback) {
-    // "dataavailable" | "stop"
     this.media.addEventListener(event, callback);
   }
 
@@ -97,5 +107,6 @@ class AudioRecorder {
 
   reset() {
     this.media = null;
+    this.chunks = [];
   }
 }

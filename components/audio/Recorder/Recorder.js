@@ -9,10 +9,14 @@ import { SectionRoot, RecordBtn, MicLevel } from "./Recorder.styles.js";
  * @prop {'idle' | 'recording' | 'complete'} RecorderState.status -- the recording status
  * @prop {?Date} RecorderState.startTime
  * @prop {?Blob} RecorderState.blob -- completed file blob
- * @prop {EffectConfig} RecorderState.fx
+ * @prop {FxConfig} RecorderState.fx
  *
- * @typedef {Object} EffectConfig
+ * @typedef {Object} FxConfig
  * @prop {?boolean} reverse
+ * @prop {?PhaserFxConfig} phaser
+ *
+ * @typedef {Object} PhaserFxConfig
+ * @prop {number} freq
  */
 
 let recorder;
@@ -30,7 +34,9 @@ const initialState = {
 export default function Recorder() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [level, setLevel] = useState(0);
+
   const player = useRef();
+  const phaser = useRef();
 
   useEffect(() => {
     recorder = new Tone.Recorder();
@@ -53,6 +59,20 @@ export default function Recorder() {
   useEffect(() => {
     if (player?.current) {
       player.current.reverse = state.fx.reverse;
+      if (state.fx.phaser) {
+        if (!phaser?.current) {
+          phaser.current = new Tone.Phaser({
+            frequency: state.fx.phaser.freq,
+            octaves: 5,
+            baseFrequency: 1000,
+          }).toDestination();
+          player.current.connect(phaser.current);
+        } else {
+          phaser.current.set({
+            frequency: state.fx.phaser.freq,
+          });
+        }
+      }
     }
   }, [state.fx]);
 
@@ -80,6 +100,12 @@ export default function Recorder() {
       payload: { reverse: !state.fx.reverse },
     });
 
+  const onPhaserFreqChange = (e) =>
+    dispatch({
+      type: "effect-change",
+      payload: { phaser: { freq: e.target.value } },
+    });
+
   return (
     <SectionRoot>
       <MicLevel style={{ ["--level"]: level }} />
@@ -89,12 +115,15 @@ export default function Recorder() {
       {state.status === "complete" ? (
         <>
           <article>
-            <p>{state.startTime.toString()}</p>
-            <p>{state.duration}</p>
+            {/* <p>{state.startTime.toString()}</p> */}
+            <p>{Math.round(player?.current?.buffer.duration)}s</p>
           </article>
 
           <Controls onPlay={onPlayClick} onPause={onPauseClick} />
-          <Effects onReverse={onReverseClick} />
+          <Effects
+            onReverse={onReverseClick}
+            onPhaserFreq={onPhaserFreqChange}
+          />
         </>
       ) : null}
     </SectionRoot>

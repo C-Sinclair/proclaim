@@ -2,7 +2,7 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import { ThemeBtnSection } from "../components/buttons/ThemeBtnSection";
 import Orators from "../components/lists/Orators";
-import Recorder from "../components/audio/Recorder";
+import Recorder from "../components/audio/Recorder/Recorder";
 
 export default function Home() {
   return (

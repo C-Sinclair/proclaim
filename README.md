@@ -1,3 +1,3 @@
-# Proclaim
+# Radiogram
 
-> The future of social ... audio snippets 
+> The future of social ... audio snippets

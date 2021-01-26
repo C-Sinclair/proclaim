@@ -1,4 +1,3 @@
-import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import { ThemeBtnSection } from "../components/buttons/ThemeBtnSection";
 import Orators from "../components/lists/Orators";
@@ -7,11 +6,6 @@ import Recorder from "../components/audio/Recorder/Recorder";
 export default function Home() {
   return (
     <div className={styles.root}>
-      <Head>
-        <title>Proclaim</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <main className={styles.main}>
         <ThemeBtnSection />
 

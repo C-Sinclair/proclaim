@@ -1,4 +1,4 @@
-import { useReducer, useState } from "react";
+import { useReducer } from "react";
 
 export default function Effects({ onReverse, onPhaserFreq }) {
   const [show, setShow] = useReducer(openReducer, {});
@@ -16,6 +16,13 @@ export default function Effects({ onReverse, onPhaserFreq }) {
           <input type="number" onChange={onPhaserFreq} />
         </div>
       ) : null}
+
+      {/* Reverb */}
+      {/* Delay */}
+      {/* BitCrusher */}
+      {/* More Distortion */}
+      {/* Filter */}
+      {/* Pitch shift */}
     </article>
   );
 }

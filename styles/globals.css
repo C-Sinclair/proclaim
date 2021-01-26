@@ -4,6 +4,9 @@
   --white: #fff;
   --red: #d44545;
 
+  --header-height: 80px;
+  --footer-height: 80px;
+
   --font-stylized: "Mrs Sheppards", cursive;
   --font-body: "Catamaran", sans-serif;
 }

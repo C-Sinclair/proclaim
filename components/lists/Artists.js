@@ -1,6 +1,6 @@
 import Link from "next/link";
 import useSWR from "swr";
-import { nameToUrl } from "../../util/orator";
+import { nameToUrl } from "../../util/url";
 import { fetcher } from "../../util/fetcher";
 
 export default function Orators() {

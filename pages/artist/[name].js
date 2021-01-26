@@ -1,10 +1,11 @@
-import { urlToName } from "../../util/orator";
+import Main from "../../components/layout/Main/Main";
+import { urlToName } from "../../util/artist";
 
-export default function Orator({ name }) {
+export default function Artist({ name }) {
   return (
-    <main>
+    <Main>
       <h1>Welcome to {name}'s sound garden</h1>
-    </main>
+    </Main>
   );
 }
 
@@ -14,13 +15,12 @@ export default function Orator({ name }) {
  */
 export async function getServerSideProps({ params }) {
   const name = urlToName(params.name);
-  const title = `Orator ${name}`;
 
   // check they exist
   // get their audio
   return {
     props: {
-      title,
+      title: `Artist ${name}`,
       name,
     },
   };

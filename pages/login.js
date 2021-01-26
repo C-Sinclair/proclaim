@@ -4,6 +4,7 @@ import * as yup from "yup";
 import { supabase } from "../util/supabase";
 import { yupResolver } from "../util/yup";
 import { TextInput } from "../components/form/TextInput/TextInput";
+import Main from "../components/layout/Main/Main";
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
@@ -28,7 +29,7 @@ export default function Login() {
   };
 
   return (
-    <main>
+    <Main hideFooter>
       <h1>Login time</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <TextInput
@@ -45,6 +46,6 @@ export default function Login() {
         />
         <button type="submit">Log in</button>
       </form>
-    </main>
+    </Main>
   );
 }

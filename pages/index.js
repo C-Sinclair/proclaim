@@ -1,24 +1,29 @@
-import styles from "../styles/Home.module.css";
-import { ThemeBtnSection } from "../components/buttons/ThemeBtnSection";
-import Orators from "../components/lists/Orators";
-import Recorder from "../components/audio/Recorder/Recorder";
+import Link from "next/link";
+import { SplashBtn } from "../components/buttons/SplashBtn";
+import Main from "../components/layout/Main/Main";
+import { Centre, SpaceBetween } from "../components/layout/Main/Main.styles";
+import { Title } from "../components/layout/Title/Title";
 
-export default function Home() {
+export default function Splash() {
   return (
-    <div className={styles.root}>
-      <main className={styles.main}>
-        <ThemeBtnSection />
+    <Main hideFooter width="250px">
+      <Title />
 
-        <h1 className={styles.title}>
-          Welcome to <a>Proclaim</a>
-        </h1>
+      <Centre>
+        <SpaceBetween>
+          <SplashBtn>
+            <Link href="/login">Log in</Link>
+          </SplashBtn>
+          <SplashBtn>
+            <Link href="/register">Sign up</Link>
+          </SplashBtn>
+        </SpaceBetween>
 
-        <Orators />
-      </main>
-
-      <footer className={styles.footer}>
-        <Recorder />
-      </footer>
-    </div>
+        <h4>Or continue shrouded in mystery...</h4>
+        <SplashBtn>
+          <Link href="/den">Enter</Link>
+        </SplashBtn>
+      </Centre>
+    </Main>
   );
 }

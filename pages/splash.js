@@ -1,14 +1,19 @@
-import styles from "../styles/Home.module.css";
-import { ThemeBtnSection } from "../components/buttons/ThemeBtnSection";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Splash() {
   return (
-    <main className={styles.main}>
-      <ThemeBtnSection />
-      <h1 className={styles.title}>
+    <main>
+      <h1>
         Welcome to <a>Radiogram</a>
       </h1>
+      <Image
+        alt="Gramophone"
+        src="/gramophone.png"
+        width={800}
+        height={1000}
+        quality={100}
+      />
       <article>
         <button>
           <Link href="/login">Log in</Link>

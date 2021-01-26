@@ -1,7 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Catamaran:wght@100;400;700&family=Mrs+Sheppards&display=swap");
 :root {
   --black: #181a1b;
   --white: #fff;
   --red: #d44545;
+
+  --font-stylized: "Mrs Sheppards", cursive;
+  --font-body: "Catamaran", sans-serif;
 }
 
 body {
@@ -22,6 +26,7 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   background-color: var(--background-1);
   color: var(--text-1);
+  font-family: var(--font-body);
 }
 
 a {

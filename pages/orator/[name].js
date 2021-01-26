@@ -1,4 +1,3 @@
-import Head from "next/head";
 import { urlToName } from "../../util/orator";
 
 export default function Orator({ name }) {

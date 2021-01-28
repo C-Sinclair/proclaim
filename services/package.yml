@@ -1,0 +1,4 @@
+exclude:
+  - venv/**
+  - node_modules/**
+  - .serverless/**
